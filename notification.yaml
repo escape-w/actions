@@ -1,0 +1,52 @@
+name: PRs reviews reminder
+
+on:
+  workflow_call:
+    inputs:
+      repository-owner:
+        description: "repository owner (for instance: daytona)"
+        required: true
+        type: string
+      repository:
+        description: "repository"
+        required: true
+        type: string
+      teams-channel-webhook:
+        description: "MS Teams channel webhook"
+        required: true
+        type: string
+      github-to-teams-mapping:
+        description: "Mapping to associate GitHub usernames to MS Teams emails"
+        required: false
+        type: string
+        default: ""
+      ignore-label:
+        description: "Label to which PRs should be ignored"
+        required: false
+        type: string
+        default: ""
+    secrets:
+      CODE_BOT_APP_ID:
+        required: true
+      CODE_BOT_APP_PEM:
+        required: true
+
+jobs:
+  pr-reviews-reminder:
+    runs-on: cawe-linux-x64-general-small
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: github-auth-token
+        with:
+          app-id: ${{ secrets.CODE_BOT_APP_ID }}
+          private-key: ${{ secrets.CODE_BOT_APP_PEM }}
+          repositories: ${{ inputs.repository }}
+          owner: ${{ inputs.repository-owner }}
+      - uses: davideviolante/pr-reviews-reminder-action@v2.8.0
+        env:
+          GITHUB_TOKEN: ${{ steps.github-auth-token.outputs.token }}
+        with:
+          webhook-url: ${{ inputs.teams-channel-webhook }}
+          provider: "msteams"
+          github-provider-map: ${{ inputs.github-to-teams-mapping }}
+          ignore-label: ${{ inputs.ignore-label }}
