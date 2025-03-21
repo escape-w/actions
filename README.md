@@ -4,5 +4,7 @@
 3. https://pakstech.com/blog/github-actions-repository-dispatch/
 4. https://github.com/marketplace/actions/changed-files
 5. https://gist.github.com/ciiqr/31af63601a4b52a05133cf2c87e022e3
-   https://docs.github.com/rest/repos/repos#create-a-repository-dispatch-event
-6. https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+6. https://docs.github.com/rest/repos/repos#create-a-repository-dispatch-event
+7. https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+8. https://github.com/hellofresh/action-changed-files
+9. https://github.com/tj-actions/changed-files
